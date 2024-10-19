@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chat</title>
+    </head>
+    <body>
+        
+        <h1>WebSocket Chat</h1>
+        <h2>Your ID: <span id="ws-id"></span></h2>
+        
+
+        <!-- <button onclick="close_connection()">Закрыть соединение</button> -->
+
+        <select name="chatSelect" id="chatSelect">
+
+        </select>
+
+        <div class="messanger">
+            <div class="messanger__header">
+                <p>Собеседник: <span id="memberName"></span></p>
+                <p>Статус собеседника: <span id="memberStatus"></span></p>
+            </div>
+            <hr>
+            <div class="messanger__body">
+                <div id="history">
+                    
+                </div>
+                <hr>
+                <div class="send_form">
+                    <form action="" onsubmit="sendMessage(event)">
+                        <textarea name="messageText" id="messageText"></textarea> <br>
+                        <button type="submit">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="http://192.168.31.153:8000/static/jquery-3.7.1.min.js"></script>
+        <script src="http://192.168.31.153:8000/static/script.js"></script>
+    </body>
+</html>
