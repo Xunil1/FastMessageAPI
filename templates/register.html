@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Авторизация</title>
+    <title>Регистрация</title>
 </head>
 <body>
-    <h1>Вход</h1>
+    <h1>Регистрация</h1>
     <div id="err_box">
-        
+
     </div>
-    <form action="" onsubmit="authUser(event)">
+    <form action="" onsubmit="registerUser(event)">
         <input type="text" id="username" placeholder="username"/><br>
         <input type="password" id="password" placeholder="password"/><br>
-        <button>Войти</button>
+        <button>Зарегистрироваться</button>
     </form>
-    <a href="/register">Зарегистрироваться</a>
+    <a href="/login">Авторизоваться</a>
 
     <script src="/static/jquery-3.7.1.min.js"></script>
-    <script src="/static/login.js"></script>
+    <script src="/static/register.js"></script>
 </body>
 </html>
