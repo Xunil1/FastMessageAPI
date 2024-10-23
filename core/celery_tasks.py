@@ -1,7 +1,8 @@
 from celery import Celery
 import asyncio
+from core.config import settings
 
-app = Celery('core', broker='redis://localhost:6379/2')
+app = Celery('core', broker=settings.REDIS_URL + '/2')
 
 @app.task()
 def send_notify(chat_id: int, notify_message: dict):

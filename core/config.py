@@ -16,5 +16,9 @@ class Settings:
     JWT_ALGORITHM = os.getenv("JWT_ALGORITHM")
     JWT_EXPIRATION_TIME = timedelta(minutes=480)
 
+    REDIS_SERVER = os.getenv("REDIS_SERVER")
+    REDIS_PORT = os.getenv("REDIS_PORT")
+    REDIS_URL = f'redis://{REDIS_SERVER}:{REDIS_PORT}'
+
 
 settings = Settings()

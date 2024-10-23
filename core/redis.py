@@ -1,7 +1,8 @@
 import aioredis
+from core.config import settings
 
 
-redis = aioredis.from_url("redis://localhost:6379", decode_responses=True)
+redis = aioredis.from_url(settings.REDIS_URL, decode_responses=True)
 
 async def set_user_online(username: str):
     key = f"user:{username}:online"
