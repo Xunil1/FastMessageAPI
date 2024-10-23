@@ -1,10 +1,10 @@
-if (localStorage.getItem('token') !== null){
-    window.location.replace("http://192.168.31.153:8000/");
+if (sessionStorage.getItem('token') !== null){
+    window.location.replace("/");
 }
 
 async function authUser(event) {
     event.preventDefault();
-    const url = "http://192.168.31.153:8000/user/auth";
+    const url = "/user/auth";
     
     const formData = new URLSearchParams();
     formData.append('username', $('#username').val());
@@ -21,9 +21,9 @@ async function authUser(event) {
 
         if (response.ok) {
             const data = await response.json();
-            localStorage.setItem('token', data["access_token"])
-            localStorage.setItem('username', $('#username').val())
-            window.location.replace("http://192.168.31.153:8000/");
+            sessionStorage.setItem('token', data["access_token"])
+            sessionStorage.setItem('username', $('#username').val())
+            window.location.replace("/");
         } else {
             console.log(response);
             $('#err_box').html(response);
