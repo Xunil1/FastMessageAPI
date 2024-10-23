@@ -66,7 +66,8 @@ async def create_new_user(user_c: UserCreate, db: AsyncSession):
     db.add(user)
     await db.commit()  # Подтверждаем изменения
     await db.refresh(user)  # Обновляем объект, чтобы получить сгенерированный ID
-    return user_view(user)
+    return await user_view(user)
+
 
 async def get_all_users(db: AsyncSession):
     result = await db.execute(select(User))
@@ -74,4 +75,23 @@ async def get_all_users(db: AsyncSession):
     result = list()
     for user in users:
         result.append(await user_view(user))
-    return result
+    return {"users": result}
+
+
+async def link_by_tg(username: str, tg_id: int, db: AsyncSession ):
+    result = await db.execute(select(User).where(User.username == username))
+    user = result.scalars().first()
+    if not user:
+        raise HTTPException(status_code=400, detail="Incorrect username or password")
+    user.telegram_id = tg_id
+    await db.commit()
+    await db.refresh(user)
+    return {"status": "ok", "detail": "Профиль мессенджера успешно связан"}
+
+async def get_user_tg_id(username: str, db: AsyncSession ):
+    result = await db.execute(select(User).where(User.username == username))
+    user = result.scalars().first()
+    if not user:
+        raise HTTPException(status_code=400, detail="Пользователь не найден")
+    await db.commit()
+    return {"tg_id": user.telegram_id}
