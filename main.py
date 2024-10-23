@@ -46,5 +46,9 @@ async def root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 @app.get("/login")
-async def root(request: Request):
+async def login(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
+
+@app.get("/register")
+async def register(request: Request):
+    return templates.TemplateResponse("register.html", {"request": request})
