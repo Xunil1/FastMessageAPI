@@ -2,6 +2,7 @@ from typing import Dict
 
 from fastapi import WebSocket
 from core.redis import is_user_online
+from core.celery_tasks import send_notify
 
 class Username(str):
     pass
@@ -19,19 +20,12 @@ class ConnectionManager:
             del self.active_connections[username]
             await self.broadcast_send({"type": "user_status", "detail": {"username": username, "status": "offline"}})
 
-
-
-    async def send_text(self, receiver: Username, message: str):
-        if await is_user_online(receiver) and receiver in self.active_connections:
-            await self.active_connections[receiver].send_text(message)
-        else:
-            print("receiver not online")
-
-    async def send_json(self, receiver: Username, data: dict):
+    async def send_json(self, receiver: Username, data: dict, tg_id: int | None = None):
         if await is_user_online(receiver) and receiver in self.active_connections:
             await self.active_connections[receiver].send_json(data)
         else:
-            print("receiver not online")
+            if tg_id:
+                send_notify.delay(tg_id, data)
 
     async def broadcast_send(self, data: dict):
         for username in self.active_connections:
