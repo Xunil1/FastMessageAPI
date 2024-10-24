@@ -1,6 +1,15 @@
 version: '3'
 
 services:
+  notify_bot:
+    build: ./notify_bot
+    container_name: notify-bot
+    command: python main.py
+    env_file:
+      - ./notify_bot/.env
+    networks:
+      - fast_msg_net
+
   fastapi:
     build: .
     container_name: fastapi_app
