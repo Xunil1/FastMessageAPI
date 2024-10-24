@@ -11,5 +11,5 @@ def send_notify(chat_id: int, notify_message: dict):
 
 async def notify(chat_id: int, message: str):
     import aiogram
-    bot = aiogram.Bot(token='6556471168:AAHbSPqzi9xWJDVc4iH5NnqB8IvA-n7MDds')
+    bot = aiogram.Bot(token=settings.API_TOKEN)
     await bot.send_message(chat_id, message)
