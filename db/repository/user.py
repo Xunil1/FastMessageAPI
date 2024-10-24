@@ -5,6 +5,7 @@ from sqlalchemy.future import select
 
 from fastapi import HTTPException
 
+from core.types.types import Username
 from db.models.user import User
 
 from schemas.user import UserCreate
@@ -25,7 +26,7 @@ async def user_view(user: User) -> Dict[str, Any]:
     }
 
 
-async def auth_current_user(username: str, password: str, db: AsyncSession):
+async def auth_current_user(username: Username, password: str, db: AsyncSession):
     result = await db.execute(select(User).where(User.username == username))
     user = result.scalars().first()
 
@@ -78,7 +79,7 @@ async def get_all_users(db: AsyncSession):
     return {"users": result}
 
 
-async def link_by_tg(username: str, tg_id: int, db: AsyncSession ):
+async def link_by_tg(username: Username, tg_id: int, db: AsyncSession ):
     result = await db.execute(select(User).where(User.username == username))
     user = result.scalars().first()
     if not user:
@@ -88,7 +89,7 @@ async def link_by_tg(username: str, tg_id: int, db: AsyncSession ):
     await db.refresh(user)
     return {"status": "ok", "detail": "Профиль мессенджера успешно связан"}
 
-async def get_user_tg_id(username: str, db: AsyncSession ):
+async def get_user_tg_id(username: Username, db: AsyncSession ):
     result = await db.execute(select(User).where(User.username == username))
     user = result.scalars().first()
     if not user:

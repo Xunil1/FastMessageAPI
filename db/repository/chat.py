@@ -1,16 +1,13 @@
-from email.policy import default
 from typing import List, Dict, Any
-from uu import decode
 
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from sqlalchemy.orm import aliased
 
 from fastapi import HTTPException
 
+from core.types.types import Username
 from db.models.chat import Chat
 from db.models.user import User
-from db.models.user_chat import UserChat
 from db.repository.user import user_view
 
 
@@ -21,7 +18,7 @@ async def chat_view(chat: Chat) -> Dict[str, Any]:
     }
 
 
-async def create_new_chat(members: list, db: AsyncSession):
+async def create_new_chat(members: list[Username], db: AsyncSession):
     if members is None or len(members) != 2:
         raise HTTPException(status_code=400, detail="Inccorect number of members")
 
@@ -51,7 +48,7 @@ async def create_new_chat(members: list, db: AsyncSession):
     return {"id": chat.id}
 
 
-async def get_all_chats(username: str, db: AsyncSession):
+async def get_all_chats(username: Username, db: AsyncSession):
     result = await db.execute(select(User).where(User.username == username))
     user = result.scalars().first()
     if user is None:
@@ -76,7 +73,7 @@ async def get_chat_info_by_chat_id(chat_id: int, db: AsyncSession):
     return await chat_view(chat)
 
 
-async def get_chat_by_members(members: list, db: AsyncSession):
+async def get_chat_by_members(members: list[Username], db: AsyncSession):
     if members is None or len(members) != 2:
         raise HTTPException(status_code=400, detail="Inccorect number of members")
 

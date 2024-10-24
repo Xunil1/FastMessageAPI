@@ -7,6 +7,7 @@ from sqlalchemy.future import select
 
 from fastapi import HTTPException
 
+from core.types.types import Username
 from db.models.chat import Chat
 from db.models.user import User
 
@@ -20,7 +21,7 @@ async def message_view(message: Message) -> Dict[str, Any]:
     }
 
 
-async def add_message(chat_id: int, sender: str, msg: str, db: AsyncSession):
+async def add_message(chat_id: int, sender: Username, msg: str, db: AsyncSession):
     # Проверка чата
     result = await db.execute(select(Chat).where(Chat.id == chat_id))
     chat = result.scalars().first()
@@ -53,7 +54,7 @@ async def add_message(chat_id: int, sender: str, msg: str, db: AsyncSession):
         "receiver": r_user.username,
     }
 
-async def get_history_by_chat_id(chat_id: id, sender: str, offset: int, limit: int, db: AsyncSession):
+async def get_history_by_chat_id(chat_id: id, sender: Username, offset: int, limit: int, db: AsyncSession):
     result = await db.execute(select(Message).where(Message.chat_id == chat_id).order_by(desc(Message.send_time)))
     messages = result.scalars().all()
 

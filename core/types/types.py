@@ -1,0 +1,4 @@
+
+
+class Username(str):
+    pass

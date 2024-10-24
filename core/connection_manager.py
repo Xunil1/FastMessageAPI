@@ -3,9 +3,8 @@ from typing import Dict
 from fastapi import WebSocket
 from core.redis import is_user_online
 from core.celery_tasks import send_notify
+from core.types.types import Username
 
-class Username(str):
-    pass
 
 class ConnectionManager:
     def __init__(self):
