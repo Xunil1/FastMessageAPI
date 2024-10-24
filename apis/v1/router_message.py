@@ -1,4 +1,3 @@
-from typing import Union
 from fastapi import APIRouter, WebSocket, Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 
@@ -56,5 +55,5 @@ async def get_history(chat_id: int, offset: int = 0, limit: int = 10, token: str
     token_data = verify_jwt_token(token)
     if token_data is None:
         raise HTTPException(status_code=403, detail="Could not validate credentials")
-    data = await get_history_by_chat_id(chat_id=chat_id, sender=token_data["username"], offset=offset, limit=limit, db=db)
+    data = await get_history_by_chat_id(chat_id=chat_id, sender=Username(token_data["username"]), offset=offset, limit=limit, db=db)
     return data
