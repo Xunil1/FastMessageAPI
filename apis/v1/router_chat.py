@@ -4,7 +4,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import Depends
 
 from core.jwt_token import verify_jwt_token
-from schemas.user import UserCreate
 from db.session import get_db
 from db.repository.chat import create_new_chat, get_chat_info_by_chat_id, get_all_chats, get_chat_by_members
 
