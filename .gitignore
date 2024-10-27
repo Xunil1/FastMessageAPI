@@ -1,0 +1,4 @@
+.idea
+.env
+.venv
+notify_bot/.env
