@@ -2,3 +2,5 @@
 .env
 .venv
 notify_bot/.env
+alembic.ini
+alembic
