@@ -10,7 +10,7 @@ from db.base import Base
 from db.session import engine
 
 origins = [
-    "*"
+    "localhost", "127.0.0.1",
 ]
 
 templates = Jinja2Templates(directory="templates")
