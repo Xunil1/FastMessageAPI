@@ -40,12 +40,7 @@ async def websocket_endpoint(websocket: WebSocket, username: str, db: AsyncSessi
                 await manager.send_json(username, {"type": "ok", "status_code": 200,  "detail": "sended", "msg": res["message"]})
                 await manager.send_json(res["receiver"], {"type": "message", "sender": username, "msg": res["message"]}, tg_id=tg_id["tg_id"])
 
-
-
-
-
     except WebSocketDisconnect:
-
         await manager.disconnect(username)
         await set_user_offline(username)
 
